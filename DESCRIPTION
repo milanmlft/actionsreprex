@@ -13,3 +13,5 @@ RoxygenNote: 7.3.2
 Suggests: 
     devtools,
     usethis
+URL: https://github.com/milanmlft/actionsreprex
+BugReports: https://github.com/milanmlft/actionsreprex/issues
