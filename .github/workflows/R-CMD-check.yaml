@@ -24,9 +24,15 @@ jobs:
           use-public-rspm: true
 
       - uses: r-lib/actions/setup-renv@v2
+
       - name: Install dev dependencies
         run: |
           Rscript -e 'renv::install()'
+
+      - name: Record renv library path
+        run: |
+          RENV_LIBRARY_PATH=$(Rscript -e 'renv::paths$library()')
+          echo "RENV_LIBRARY_PATH=$RENV_LIBRARY_PATH" >> $GITHUB_ENV
 
       - uses: r-lib/actions/check-r-package@v2
         with:
@@ -34,6 +40,7 @@ jobs:
           build_args: 'c("--no-manual","--compact-vignettes=gs+qpdf")'
 
       - name: Check cached paths
+        continue-on-error: true
         run: |
           ls -lhrt /home/runner/work/_temp/renv &&
           ls -lhrt renv/library &&
@@ -41,3 +48,9 @@ jobs:
           du -hs /home/runner/work/_temp/renv/* &&
           du -hs renv/library &&
           du -hs ~/work/actionsreprex/actionsreprex/renv/library
+
+      - name: Check renv library path
+        continue-on-error: true
+        run: |
+          ls $RENV_LIBRARY_PATH &&
+          du -hs $RENV_LIBRARY_PATH
