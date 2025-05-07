@@ -23,7 +23,7 @@ jobs:
         with:
           use-public-rspm: true
 
-      - uses: r-lib/actions/setup-r-dependencies@v2
+      - uses: r-lib/actions/setup-renv@v2
         with:
           extra-packages: any::rcmdcheck
           needs: check
@@ -32,3 +32,12 @@ jobs:
         with:
           upload-snapshots: true
           build_args: 'c("--no-manual","--compact-vignettes=gs+qpdf")'
+
+      - name: Check cached paths
+        run: |
+          ls -lhrt /home/runner/work/_temp/renv &&
+          ls -lhrt renv/library &&
+          ls -lhrt ~/work/actionsreprex/actionsreprex/renv/library &&
+          du -hs /home/runner/work/_temp/renv/* &&
+          du -hs renv/library &&
+          du -hs ~/work/actionsreprex/actionsreprex/renv/library
