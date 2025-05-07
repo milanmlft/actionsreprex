@@ -31,7 +31,7 @@ jobs:
 
       - name: Record renv library path
         run: |
-          RENV_LIBRARY_PATH=$(Rscript -e 'renv::paths$library()')
+          RENV_LIBRARY_PATH=$(Rscript -e 'cat(renv::paths$library())')
           echo "RENV_LIBRARY_PATH=$RENV_LIBRARY_PATH" >> $GITHUB_ENV
 
       - uses: r-lib/actions/check-r-package@v2
